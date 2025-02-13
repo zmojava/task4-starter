@@ -23,19 +23,16 @@ public class HttpLoggingAspect {
 
     @Before("restControllerMethods()")
     public void logRequest(JoinPoint joinPoint) {
-        if (properties.isEnabled()) {
-            String methodName = joinPoint.getSignature().getName();
-            Object[] args = joinPoint.getArgs();
-            log("Request", methodName, args);
-        }
+        String methodName = joinPoint.getSignature().getName();
+        Object[] args = joinPoint.getArgs();
+        log("Request", methodName, args);
+
     }
 
     @AfterReturning(pointcut = "restControllerMethods()", returning = "result")
     public void logResponse(JoinPoint joinPoint, Object result) {
-        if (properties.isEnabled()) {
-            String methodName = joinPoint.getSignature().getName();
-            log("Response", methodName, result);
-        }
+        String methodName = joinPoint.getSignature().getName();
+        log("Response", methodName, result);
     }
 
     private void log(String type, String methodName, Object data) {
